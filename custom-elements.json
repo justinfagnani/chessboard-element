@@ -80,7 +80,7 @@
       "properties": [
         {
           "name": "styles",
-          "type": "CSSResult",
+          "type": "CSSResultGroup",
           "default": "\"styles\""
         },
         {

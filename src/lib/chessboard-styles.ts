@@ -5,7 +5,7 @@
  * https://github.com/justinfagnani/chessboard-element/blob/master/LICENSE.md
  */
 
-import {css} from 'lit-element';
+import {css} from 'lit';
 
 export const styles = css`
   :host {

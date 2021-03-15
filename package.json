@@ -37,7 +37,6 @@
     "bundle": "rollup -c"
   },
   "dependencies": {
-    "lit-element": "^2.2.1",
-    "lit-html": "^1.2.1"
+    "lit": "^2.0.0-pre.1"
   }
 }

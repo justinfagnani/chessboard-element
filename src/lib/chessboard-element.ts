@@ -5,11 +5,11 @@
  * https://github.com/justinfagnani/chessboard-element/blob/master/LICENSE.md
  */
 
-import {customElement, property, LitElement, html, query} from 'lit-element';
-import {render, directive, AttributePart, removeNodes} from 'lit-html';
-import {styleMap, StyleInfo} from 'lit-html/directives/style-map.js';
-import {ifDefined} from 'lit-html/directives/if-defined.js';
-import {nothing} from 'lit-html';
+import {LitElement, html, nothing, render, AttributePart, noChange} from 'lit';
+import {customElement, property, query} from 'lit/decorators.js';
+import {directive, Directive, DirectiveParameters} from 'lit/directive.js';
+import {styleMap, StyleInfo} from 'lit/directives/style-map.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
 import {deepCopy, interpolateTemplate, isString, isFunction} from './utils.js';
 import {styles} from './chessboard-styles.js';
@@ -160,19 +160,26 @@ const sparePieceId = (piece: Piece) => `spare-piece-${piece}`;
 // const wikipediaPiece = (p: Piece) =>
 //   new URL(`../chesspieces/wikipedia/${p}.png`, import.meta.url).href;
 
-export type RenderPieceFunction = (piece: Piece, container: Element) => void;
+export type RenderPieceFunction = (
+  piece: Piece,
+  container: HTMLElement
+) => void;
 
-const renderPieceDirective = directive(
-  (piece: Piece, renderPiece?: RenderPieceFunction) => (
-    part: AttributePart
-  ) => {
-    if (isFunction(renderPiece)) {
-      renderPiece(piece, part.committer.element);
-    } else {
-      removeNodes(part.committer.element, part.committer.element.firstChild);
-    }
+class RenderPieceDirective extends Directive {
+  render(_piece: Piece, _renderPiece?: RenderPieceFunction) {
+    return nothing;
   }
-);
+
+  update(part: AttributePart, [piece, renderPiece]: DirectiveParameters<this>) {
+    if (isFunction(renderPiece)) {
+      renderPiece(piece, part.element);
+    } else {
+      (part.element as any).replaceChildren();
+    }
+    return noChange;
+  }
+}
+const renderPieceDirective = directive(RenderPieceDirective);
 
 /**
  * A custom element that renders an interactive chess board.
@@ -373,7 +380,10 @@ export class ChessBoardElement extends LitElement {
    * @default Function
    */
   @property({attribute: false})
-  renderPiece?: RenderPieceFunction = (piece: string, container: Element) => {
+  renderPiece?: RenderPieceFunction = (
+    piece: string,
+    container: HTMLElement
+  ) => {
     let pieceImage: string | undefined = undefined;
     if (isString(this.pieceTheme)) {
       pieceImage = interpolateTemplate(this.pieceTheme, {piece: piece});

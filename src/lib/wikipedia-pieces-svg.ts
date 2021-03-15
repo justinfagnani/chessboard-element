@@ -1,10 +1,10 @@
-import {render, svg, html, TemplateResult} from 'lit-html';
+import {render, svg, html, TemplateResult} from 'lit';
 import {RenderPieceFunction} from './chessboard-element.js';
 import {Piece} from './chess-utils.js';
 
 export const renderPiece: RenderPieceFunction = (
   piece: Piece,
-  container: Element
+  container: HTMLElement
 ) => {
   render(
     html` <svg class="piece-image" viewBox="0 0 45 45">${pieces[piece]}</svg> `,

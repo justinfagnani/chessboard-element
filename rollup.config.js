@@ -19,6 +19,15 @@ import resolve from '@rollup/plugin-node-resolve';
 import minifyHTML from 'rollup-plugin-minify-html-literals';
 import license from 'rollup-plugin-license';
 
+const escapeNullByte = {
+  name: 'escapeNullByte',
+  transform(code) {
+    code = code.replaceAll('\0', '\\0');
+    return {
+      code,
+    };
+  },
+};
 
 export default {
   input: 'index.js',
@@ -52,7 +61,7 @@ export default {
     }),
     terser({
       warnings: true,
-      ecma: 2017,
+      ecma: 2020,
       compress: {
         unsafe: true,
       },
@@ -66,6 +75,7 @@ export default {
         comments: false,
       },
     }),
+    escapeNullByte,
     filesize({
       showBrotliSize: true,
     })
