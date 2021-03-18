@@ -37,6 +37,14 @@
             },
             {
               "kind": "field",
+              "name": "clickMove",
+              "privacy": "public",
+              "description": "Used to indicate whether click-to-move is in process",
+              "type": "boolean",
+              "default": "false"
+            },
+            {
+              "kind": "field",
               "name": "hideNotation",
               "privacy": "public",
               "description": "Whether to show the board notation.",
@@ -310,6 +318,13 @@
               "fieldName": "position",
               "description": "The current position of the board, as a `PositionObject`. This property may\nbe set externally, but only to valid `PositionObject`s. The value is copied\nbefore being applied to the board. Changes to the position object are not\nreflected in th rendering.\n\nTo set the position using FEN, or a keyword like `'start'`, or to use\nanimations, use the `setPosition` method.",
               "type": "{ [square: string]: string | undefined; }"
+            },
+            {
+              "name": "click-move",
+              "fieldName": "clickMove",
+              "defaultValue": "false",
+              "description": "Used to indicate whether click-to-move is in process",
+              "type": "boolean"
             },
             {
               "name": "hide-notation",

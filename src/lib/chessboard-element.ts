@@ -300,6 +300,15 @@ export class ChessBoardElement extends LitElement {
   }
 
   /**
+   * Used to indicate whether click-to-move is in process
+   */
+  @property({
+    attribute: 'click-move',
+    type: Boolean,
+  })
+  clickMove = false;
+
+  /**
    * Whether to show the board notation.
    */
   @property({
@@ -1226,6 +1235,16 @@ export class ChessBoardElement extends LitElement {
     assertIsDragging(this._dragState);
     const {source, piece} = this._dragState;
 
+    // if destination is same as source, piece stays picked up and is dropped at the next clicked square.
+    if (this.clickMove === false) {
+      if (square === source) {
+        this.clickMove = true;
+        return;
+      }
+    }
+
+    this.clickMove = false;
+
     // update position
     const newPosition = deepCopy(this._currentPosition);
     delete newPosition[source];
@@ -1357,7 +1376,17 @@ export class ChessBoardElement extends LitElement {
     let action: Action = 'drop';
     if (location === 'offboard') {
       action = this.dropOffBoard === 'trash' ? 'trash' : 'snapback';
-    }
+      this.clickMove = false;
+    } else {
+      if (this.clickMove == false) {
+          // pick up spare piece and put it down on next clicked square
+          this.clickMove = true;
+          return;
+      } else {
+          // drop piece back on its origin square
+          this.clickMove = false;
+      }
+    }    
 
     const newPosition = deepCopy(this._currentPosition);
     const oldPosition = deepCopy(this._currentPosition);
