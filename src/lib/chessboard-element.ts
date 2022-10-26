@@ -495,6 +495,7 @@ export class ChessBoardElement extends LitElement {
         )}
       </div>
       <div
+        part="dragged-pieces"
         id="dragged-pieces"
         style=${styleMap({
           width: `${this._squareSize}px`,
