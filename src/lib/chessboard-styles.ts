@@ -11,9 +11,9 @@ export const styles = css`
   :host {
     display: block;
     position: relative;
-    --light-color: #f0d9b5;
-    --dark-color: #b58863;
-    --highlight-color: yellow;
+    --default-light-color: #f0d9b5;
+    --default-dark-color: #b58863;
+    --default-highlight-color: yellow;
   }
 
   [part~='board'] {
@@ -56,17 +56,18 @@ export const styles = css`
   }
 
   [part~='white'] {
-    background-color: var(--light-color);
-    color: var(--dark-color);
+    background-color: var(--light-color, var(--default-light-color));
+    color: var(--dark-color, var(--default-dark-color));
   }
 
   [part~='black'] {
-    background-color: var(--dark-color);
-    color: var(--light-color);
+    background-color: var(--dark-color, var(--default-dark-color));
+    color: var(--light-color, var(--default-light-color));
   }
 
   [part~='highlight'] {
-    box-shadow: inset 0 0 3px 3px var(--highlight-color);
+    box-shadow: inset 0 0 3px 3px
+      var(--highlight-color, var(--default-highlight-color));
   }
 
   [part~='notation'] {
