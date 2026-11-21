@@ -760,6 +760,11 @@ export class ChessBoardElement extends LitElement {
   // -------------------------------------------------------------------------
 
   private _mousedownSquare(e: MouseEvent | TouchEvent) {
+    // do nothing for non-primary mouse buttons
+    if (e instanceof MouseEvent && e.button !== 0) {
+      return;
+    }
+
     // do nothing if we're not draggable. sparePieces implies draggable
     if (!this.draggablePieces && !this.sparePieces) {
       return;
@@ -782,6 +787,11 @@ export class ChessBoardElement extends LitElement {
   }
 
   private _mousedownSparePiece(e: MouseEvent | TouchEvent) {
+    // do nothing for non-primary mouse buttons
+    if (e instanceof MouseEvent && e.button !== 0) {
+      return;
+    }
+
     // do nothing if sparePieces is not enabled
     if (!this.sparePieces) {
       return;
