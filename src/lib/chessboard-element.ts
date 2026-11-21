@@ -690,7 +690,7 @@ export class ChessBoardElement extends LitElement {
       if (
         piece &&
         (animation.type === 'move-start' ||
-          (animation.type === 'add-start' && this.draggablePieces))
+          (animation.type === 'add-start' && this.sparePieces))
       ) {
         // Position the moved piece absolutely at the source
         const srcSquare =
@@ -716,7 +716,7 @@ export class ChessBoardElement extends LitElement {
       if (
         piece &&
         (animation.type === 'move' ||
-          (animation.type === 'add' && this.draggablePieces))
+          (animation.type === 'add' && this.sparePieces))
       ) {
         // Transition the moved piece to the destination
         return {
