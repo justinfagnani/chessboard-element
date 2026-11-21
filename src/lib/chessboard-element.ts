@@ -297,7 +297,7 @@ export class ChessBoardElement extends LitElement {
     converter: (value: string | null) => normalizePozition(value),
   })
   get position(): PositionObject {
-    return this._currentPosition;
+    return deepCopy(this._currentPosition);
   }
 
   set position(v: PositionObject) {
@@ -1057,7 +1057,7 @@ export class ChessBoardElement extends LitElement {
     );
 
     // update state
-    this._currentPosition = position;
+    this._currentPosition = newPos;
   }
 
   private _isXYOnSquare(x: number, y: number): Location | 'offboard' {
